@@ -97,27 +97,80 @@ app = Flask(__name__)
 
 @app.route('/', methods = ['POST', 'GET'])
 def index():
-  return render_template('index.html')
+    return render_template('index.html')
 
-@app.route('/page1', methods = ['POST', 'GET'])
-def page1():
-  if request.method == 'POST':
-    choice = request.form.getlist('choice')[0]
-    number = request.form.get('number', type=int)
-    # label = request.form['label']
-    # number = request.form['number']
-    plt.figure()
-    output_image = predict_on_crops('static/data/'+choice+'/'+str(number)+'.jpg')
-    prediction = cv2.cvtColor(output_image, cv2.COLOR_BGR2RGB)
-    plt.imshow(prediction)
-    plt.imsave("static/data/prediction.jpg", prediction)
-    return render_template('page1.html', prediction='data/prediction.jpg', input='data/'+choice+'/'+str(number)+'.jpg', original_input=number)
-  else:
-    return render_template("page1.html")
+@app.route('/live_demo', methods = ['POST', 'GET'])
+def live_demo():
+    if request.method == 'POST':
+        predictions = {"negative1": False,
+                       "negative2": False,
+                       "negative3": False,
+                       "negative4": False,
+                       "negative5": False,
+                       "positive1": False,
+                       "positive2": False,
+                       "positive3": False,
+                       "positive4": False,
+                       "positive5": False}
+        # analysis = True
+        choices = request.form.getlist('image')
+        images_selection = []
 
-@app.route('/page2', methods = ['POST', 'GET'])
-def page2():
-  return render_template('page2.html')
+        for i in range(len(choices)):
+            if choices[i][0] == 'p':
+                images_selection.append('static/data/Positive/'+choices[i][-1]+'.jpg')
+            elif choices[i][0] == 'n':
+                images_selection.append('static/data/Negative/'+choices[i][-1]+'.jpg')
+
+        for i in range(len(choices)):
+            predictions[choices[i]] = True
+            plt.figure()
+            output_image = predict_on_crops(images_selection[i])
+            prediction = cv2.cvtColor(output_image, cv2.COLOR_BGR2RGB)
+            plt.imshow(prediction)
+            plt.imsave("static/data/Predictions/"+choices[i]+".jpg", prediction)
+
+        """
+        height=227
+        width=227
+        for input_image in images_selection:
+            im = cv2.imread(input_image)
+            imgheight, imgwidth, channels = im.shape
+            for i in range(0,imgheight,height):
+                for j in range(0,imgwidth,width):
+                    a = im[i:i+height, j:j+width]
+                    ## discard image cropss that are not full size
+                    predictions.append(predict(model,Image.fromarray(a)))
+        # number = request.form.get('number', type=int)
+        # label = request.form['label']
+        # number = request.form['number']
+        plt.figure()
+        output_image = predict_on_crops('static/data/'+choice+'/'+str(number)+'.jpg')
+        prediction = cv2.cvtColor(output_image, cv2.COLOR_BGR2RGB)
+        plt.imshow(prediction)
+        plt.imsave("static/data/prediction.jpg", prediction)
+        """
+
+        return render_template('live_demo.html', predictions=predictions)
+    else:
+        predictions = {"negative1": False,
+                       "negative2": False,
+                       "negative3": False,
+                       "negative4": False,
+                       "negative5": False,
+                       "positive1": False,
+                       "positive2": False,
+                       "positive3": False,
+                       "positive4": False,
+                       "positive5": False}
+        dir = 'static/data/Predictions'
+        for f in os.listdir(dir):
+            os.remove(os.path.join(dir, f))
+        return render_template("live_demo.html", predictions=predictions)
+
+@app.route('/documentation', methods = ['POST', 'GET'])
+def documentation():
+  return render_template('documentation.html')
 
 if __name__ == '__main__':
   app.run(debug=True)
