@@ -52,7 +52,7 @@ model.fc = nn.Sequential(
 
 # model = torch.load("model.pt", map_location=torch.device('cpu'))
 model = model.to(device)
-model.load_state_dict(torch.load("model.pt", map_location=torch.device('cpu')))
+model.load_state_dict(torch.load("cnn_state_dict_model.pt", map_location=torch.device('cpu')))
 print("\nModel loaded")
 
 def predict(model, test_image, print_class = False):
