@@ -108,8 +108,7 @@
 					<img src="{{ url_for('static', filename='assets/images/CNN3.png') }}" alt="">
 					Thus the negative log-likelihood loss function oscillates between 0.55 and 0.50 after some iterations. At this stage, it is better to take an iteration close to 0.50 because the model will not learn more. This gives a training accuracy of 0.8431 on the training set composed of 1587 images and 413 for the validation set. This gives a lot of left images to form new datasets at each epoch with the same length but only different images.
 					<img src="{{ url_for('static', filename='assets/images/CNN4.png') }}" alt="">
-					This image is represented the testing accuracy along with the training. As we can see, the train and validation accuracy is very close with a maximum of 0.939467 for validation. This allows us to have a strong classical model for the image classification between the negative label with no cracks and the positive label with cracks.
-					In the end, the results are shown here when the model is presented with new data images.
+					This image is represented the testing accuracy along with the training. As we can see, the train and validation accuracy is very close with a maximum of 0.939467 for validation. This allows us to have a strong classical model for the image classification between the negative label with no cracks and the positive label with cracks. In the end, the results are shown here when the model is presented with new data images.
 					<img src="{{ url_for('static', filename='assets/images/CNN5.png') }}" alt="">
 					The model is built to only highlight the crack zones of the images. Thus we can see that for the left image labelled Negative, the whole image is green which indicates the model has detected no cracks. The image is predicted as Negative. On the right, the model also detected the no crack zones that appear in green but some areas are red indicating the detection of cracks. The image is predicted as Positive and the model specifies precisely the location of the cracks. 
 					<br><br>
@@ -122,21 +121,54 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <p class="mbr-text mbr-fonts-style display-7">
-                                    A classical Convolution Neural Network (CNN) is made using the Pytorch library for convenient data transformation as well as its compatibility with Qiskit modules that will be useful to develop the quantum model. 
-
-Quantum neural networks (QNNs) are computational neural network models which are based on the principles of quantum mechanics and acts application-agnostic computational units that can be used for many different use cases, such as Image Processing , Natural Language Processing, computer games, function approximation, handling big data, in modelling social networks, associative memory devices, and automated control systems etc.
-<br>For this stage, a hybrid QNN model is prepared simultaneously using Pytorch and Qiskit. The approach was to use a classical Neural network and add in a few quantum layers which are in practise, governed by a pre-set quantum circuit. This complete implementation is trained with the same surface crack dataset mentioned previously. Here 1000 positive and negative crack images are taken rather than 20000 for training reasons. There were some complications involved with access time and resource allocation on our IBM backend which warranted for a decrease in resolution of the samples and the size of the training set. 
-<br>The customized quantum circuit for the QNN model was made by preparing a quantum class using a simple quantum circuit with RY−rotation by the angle 𝜽 to train the output of our circuit. 
-<br>Now after defining the quantum circuit, the functions needed for back-propagation are created using PyTorch. The forward and backward passes contain elements from the created Qiskit class. The backward pass directly computes the analytical gradients using the finite difference formula. 
-<br>We have loaded the data and coded a class that creates our quantum circuit which contains 1 trainable parameter. This quantum parameter will be inserted into a classical neural network along with the other classical parameters to form the hybrid neural network. We also created backward and forward pass functions that allow us to do backpropagation and optimise our neural network. Lastly, we need to specify our neural network architecture such that we can begin to train our parameters using optimization techniques provided by PyTorch.
-<br>The network will need to be compatible in terms of its dimensionality when the quantum layer (such that in the quantum circuit) will be inserted. Since the quantum circuit in this paper contains 1 parameter, the network should condense neurons down to size 1. A typical Convolutional Neural Network with two fully-connected layers at the end is made up. The value of the last neuron of the fully-connected layer is fed as the parameter 𝜽 into our quantum circuit. The circuit measurement then serves as the final prediction for 0 or 1 as provided by a σz measurement. Now by using Adam PyTorch optimiser, learning rate as 0.001 and negative log-likelihood loss function in order to train over multiple epochs.
-<br>At the end of the training process, we obtain the following evolution for the loss function.
-Considerations are-
-5 layer NN, Image input resolution = 6x6, Scaling Method: LANCZOS, Train Dataset size = 159, Test Dataset size = 39, Image channels = 1, Hybrid fully connected quantum layers = 1, Simulator =aer_simulator, No of Qubits = 1.
-This gives a training accuracy of 0.667 on the training set composed of 159 images for the situation and the rest is for testing and validation.
-Training accuracy : 66.7%  and  Validation accuracy: 63.40%
-In this image are represented the testing accuracy along with the training. As we can see, the training accuracy is higher with a final score of 0.692 compared to the testing accuracy. This allows us to have a hybrid model for the image classification between the negative label with no cracks and the positive label with cracks.
-
+					<strong>Quantum-classical Neural Networks with PyTorch and Qiskit:</strong>
+					<br><br>
+					Quantum Neural Networks (QNNs) are computational neural network models which are based on the principles of quantum mechanics and act application-agnostic computational units that can be used for many different use cases, such as Image Processing, Natural Language Processing, computer games, function approximation, handling big data, in modelling social networks, associative memory devices, and automated control systems etc.
+					<br><br>
+					For this stage, a hybrid QNN model is prepared simultaneously using Pytorch and Qiskit. The approach was to use a classical Neural network and add in a few quantum layers which are in practice, governed by a pre-set quantum circuit. This complete implementation is trained with the same surface crack dataset mentioned previously. Here 1000 positive and negative crack images are taken rather than 20000 for training reasons. There were some complications involved with access time and resource allocation on our IBM backend which warranted a decrease in resolution of the samples and the size of the training set. 
+					<br><br>
+					<strong>Creating a "Quantum Class" with Qiskit:</strong>
+					<br><br>
+					The customized quantum circuit for the QNN model was made by preparing a quantum class using a simple quantum circuit with RY−rotation by the angle 𝜽 to train the output of our circuit. 
+					<img src="{{ url_for('static', filename='assets/images/QNN1.png') }}" alt="">
+					To measure the output in the z−basis, we calculate the σz expectation as:
+					<img src="{{ url_for('static', filename='assets/images/QNN2.png') }}" alt="">
+					After implementing this the calculated expected value comes out to be 0.54. 
+					<br><br>
+					<strong>Creating a "Quantum-Classical Class" with PyTorch:</strong>
+					Now after defining the quantum circuit, the functions needed for back-propagation are created using PyTorch. The forward and backward passes contain elements from the created Qiskit class. The backward pass directly computes the analytical gradients using the finite difference formula.
+					<br><br>
+					<strong>Data Loading and Preprocessing and training the network:</strong>
+					<br><br>
+					We have loaded the data and coded a class that creates our quantum circuit which contains 1 trainable parameter. This quantum parameter will be inserted into a classical neural network along with the other classical parameters to form the hybrid neural network. We also created backwards and forward pass functions that allow us to do backpropagation and optimise our neural network. Lastly, we need to specify our neural network architecture such that we can begin to train our parameters using optimization techniques provided by PyTorch.
+					<br><br>
+					<strong>Creating the Hybrid Neural Network and training:</strong>
+					<br><br>
+					The network will need to be compatible in terms of its dimensionality when the quantum layer (such that in the quantum circuit) will be inserted. Since the quantum circuit in this paper contains 1 parameter, the network should condense neurons down to size 1. A typical Convolutional Neural Network with two fully connected layers at the end is made up. The value of the last neuron of the fully connected layer is fed as the parameter 𝜽 into our quantum circuit. The circuit measurement then serves as the final prediction for 0 or 1 as provided by a σz measurement. Now by using Adam PyTorch optimiser, the learning rate is 0.001 and negative log-likelihood loss function to train over multiple epochs.
+					<br><br>
+					<strong>Results:</strong>
+					<br><br>
+					The model was retrained for 19 epochs on the training data set sample while measuring loss and accuracy on the validation set. The summary of the final model used for the experimentations is shown in the following image.
+					<img src="{{ url_for('static', filename='assets/images/QNN3.png') }}" alt="">
+					At the end of the training process, we obtain the following evolution for the loss function.
+					<br><br>
+					<strong>Define Optimizer and Loss Function:</strong>
+					<br><br>
+					Learning rate decay- As we train the model, we can decide to change the learning rate dynamically. The scheduler helps us in doing that. In the 1st epoch, the learning rate was 0.1, then the learning rate in epoch 4 would be 0.01.
+					<br>
+					Considerations are:
+					<br>
+					5 layer NN, Image input resolution = 6x6, Scaling Method: LANCZOS, Train Dataset size = 159, Test Dataset size = 39, Image channels = 1, Hybrid fully connected quantum layers = 1, Simulator =aer_simulator, No of Qubits = 1.
+					<img src="{{ url_for('static', filename='assets/images/QNN4.png') }}" alt="">
+					This gives a training accuracy of 0.8599 on the training set composed of 159 images for the situation and the rest is for testing and validation.
+					<img src="{{ url_for('static', filename='assets/images/QNN5.png') }}" alt="">
+					Training accuracy: 85.99%  and  Validation accuracy: 95.02% 
+					<br>
+					This image is represented the testing accuracy along with the training. As we can see, the training accuracy is lesser with a final score of 0.8599 compared to the testing accuracy. This allows us to have a hybrid model for the image classification between the negative label with no cracks and the positive label with cracks.
+					<br><br>
+					These are the results displayed at the end of the analysis on new images of the dataset.
+					<img src="{{ url_for('static', filename='assets/images/QNN6.png') }}" alt="">
+					The model is built to only highlight the crack zones of the images. Thus we can see that for the left image labelled Negative, the whole image is green which indicates the model has detected no cracks. The image is predicted as Negative. On the right, the model also detected the no crack zones that appear in green but some areas are red indicating the detection of cracks. The image is predicted as Positive and the model specifies precisely the location of the cracks. 
 				</p>
                             </div>
                         </div>
