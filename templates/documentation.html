@@ -72,10 +72,15 @@
             <div class="col-12 col-md-8">
                 <h3 class="mbr-section-title mb-0 mbr-fonts-style display-2">
                     <strong>Models</strong></h3>
-                <h4 class="mbr-section-subtitle mb-0 mt-2 mbr-fonts-style display-7">Project - QDA focuses on developing machine learning models for image processing based on the presented dataset. The methods of Classical and Quantum machine learning have proved to be very accurate for image classification and as a result, these models are being implemented in this project in order to build a high performance solution for Surface Crack Detection.
-
-<br>The use of the two different versions with classical and quantum computing has allowed us to compare and get an insight into the performances of each model. Since it a tendency of classical computers to reach their limits, Project - QDA aims to see if quantum computing can be a viable alternative in the future (and even in the present) with the rapidly developing technology.
-</h4>
+                <h4 class="mbr-section-subtitle mb-0 mt-2 mbr-fonts-style display-7">
+			Project - QDA focuses on developing machine learning models for image processing based on the presented dataset. The methods of Classical and Quantum machine learning have proved to be very accurate for image classification and as a result, these models are being implemented in this project in order to build a high-performance solution for Surface Crack Detection.
+			<br><br>
+			The use of the two different versions with classical and quantum computing has allowed us to compare and get an insight into the performances of each model. Since it is a tendency of classical computers to reach their limits, Project - QDA aims to see if quantum computing can be a viable alternative in the future (and even in the present) with the rapidly developing technology. 
+			<br><br>
+			The aim behind the exploration of quantum techniques in such challenges is to be able to outperform classical methods thanks to the properties of quantum mechanics. Indeed, quantum computing could represent a large cut in cost due to the use of large image datasets that are very expensive to store, process and analyze. With the development of QRAM as a new way to store data, it could be possible to access large amounts of data with low energy and very easily. Moreover, quantum computing is said to give exponential speedup over classical processes. Finally, another key element in the role of quantum mechanics in computing is the ability to perform operations that are not conceivable by classical computers. This gives new ways to understand how data can be analyzed by quantum architectures to reveal other kinds of valuable information. 
+			<br><br>
+			More importantly, this is an industrial challenge to overcome in order to be even more efficient than today with quantum computers. That is why this study focused on quantum computing to elaborate on new real-life applications to common problems. Thus, when the technology has matured enough, it will be possible to integrate it easily into this new industry and benefit from the quantum advantages.
+		</h4>
             </div>
         </div>
         <div class="row justify-content-center mt-4">
@@ -93,18 +98,22 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <p class="mbr-text mbr-fonts-style display-7">
-                                    A classical Convolution Neural Network (CNN) is made using the Pytorch library for convenient data transformation as well as its compatibility with Qiskit modules that will be useful to develop the quantum model. Indeed, Pytorch has a native connector for Qiskit which reduces the development overhead and augments the model creation process.
-
-For this specific implementation, a pretrained ResNet50 model is used and re-purposed for the surface crack detection datasets by implementing it using transfer learning. Transfer learning is a method where we take a pretrained model on a given task and train it again to perform on another task. As we can see on the image, we have the ResNet50 model presented that was previously trained. After that, we use in our situation the images presented before to train it again.
-<br>In our situation, model parameters were untouched and Adam optimizer with a default learning rate was utilized. The model was retrained for 5 epochs on the training data set sample while measuring loss and accuracy on the validation set.
-<br>Thus the negative log likelihood loss function oscillates between 0.55 and 0.50 after some iterations. At this stage, it is better to take an iteration close to 0.50 because the model will not learn more. This gives a training accuracy of 0.8431 on the training set composed of 1587 images and 413 for the validation set. This gives a lot of left images to form new datasets at each epoch with the same length but only different images.
-<br>In this image are represented the testing accuracy along with the training. As we can see, the train and validation accuracy are very close with a maximum of 0.939467 for validation. This allows us to have a strong classical model for the image classification between the negative label with no cracks and the positive label with cracks.
-
-In the end, the results are shown here when the model is presented with new data images.
-<br>The model is built to only highlight the crack zones of the images. Thus we can see that for the left image labelled Negative, the whole image is green which indicates the model has detected no cracks. The image is predicted as Negative. On the right, the model also detected the no crack zones that appear in green but some areas are red indicating the detection of cracks. The image is predicted as Positive and the model specifies precisely the location of the cracks. 
-<br>In the context of industrialization, it is not enough for a model to detect only that there are cracks on a shown image of an assembly piece. Indeed, if we want to fix it or change only the corresponding part of the piece, it is necessary to have the precise location of the crack on the image. 
-
-
+					A classical Convolution Neural Network (CNN) is made using the Pytorch library for convenient data transformation as well as its compatibility with Qiskit modules that will be useful to develop the quantum model. Indeed, Pytorch has a native connector for Qiskit which reduces the development overhead and augments the model creation process.
+					<br><br>
+					For this specific implementation, a pre-trained ResNet50 model is used and re-purposed for the surface crack detection datasets by implementing it using transfer learning. Transfer learning is a method where we take a pre-trained model on a given task and train it again to perform on another task. As we can see on the image, we have the ResNet50 model presented that was previously trained. After that, we use in our situation the images presented before to train it again.
+					<img src="{{ url_for('static', filename='assets/images/CNN1.png') }}" alt="">
+					In our situation, model parameters were untouched and an Adam optimizer with a default learning rate was utilized. The model was retrained for 19 epochs on the training data set sample while measuring loss and accuracy on the validation set. The summary of the final model used for the experimentations is shown in the following image.
+					<img src="{{ url_for('static', filename='assets/images/CNN2.png') }}" alt="">
+					At the end of the training process, we obtain the following evolution for the loss function.
+					<img src="{{ url_for('static', filename='assets/images/CNN3.png') }}" alt="">
+					Thus the negative log-likelihood loss function oscillates between 0.55 and 0.50 after some iterations. At this stage, it is better to take an iteration close to 0.50 because the model will not learn more. This gives a training accuracy of 0.8431 on the training set composed of 1587 images and 413 for the validation set. This gives a lot of left images to form new datasets at each epoch with the same length but only different images.
+					<img src="{{ url_for('static', filename='assets/images/CNN4.png') }}" alt="">
+					This image is represented the testing accuracy along with the training. As we can see, the train and validation accuracy is very close with a maximum of 0.939467 for validation. This allows us to have a strong classical model for the image classification between the negative label with no cracks and the positive label with cracks.
+					In the end, the results are shown here when the model is presented with new data images.
+					<img src="{{ url_for('static', filename='assets/images/CNN5.png') }}" alt="">
+					The model is built to only highlight the crack zones of the images. Thus we can see that for the left image labelled Negative, the whole image is green which indicates the model has detected no cracks. The image is predicted as Negative. On the right, the model also detected the no crack zones that appear in green but some areas are red indicating the detection of cracks. The image is predicted as Positive and the model specifies precisely the location of the cracks. 
+					<br><br>
+					In the context of industrialization, it is not enough for a model to detect only that there are cracks on a shown image of an assembly piece. Indeed, if we want to fix it or change only the corresponding part of the piece, it is necessary to have the precise location of the crack on the image. 
                                 </p>
                             </div>
                         </div>
