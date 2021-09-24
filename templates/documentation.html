@@ -177,9 +177,23 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <p class="mbr-text mbr-fonts-style display-7">
-Collaboration has always been an important concept in the scientific community. In addition to using the built-in programs, a new dimension can come up with Qiskit ML programs that can help and accelerate the progress in research.
-<br>In Quantum Machine Learning (QML), Quantum kernels is the approach of exploiting group structure in data which helps to achieve quantum speedup. Quantum kernels can be optimized with a technique called kernel alignment. QNN is parameterized quantum circuits which act like linear methods in quantum feature space and suitable for using quantum kernels and in turn can be optimized using Quantum Kernel Alignment. An attempt is made to demonstrate the application of using QKA with QNN networks in the model to have augmented training or performance improvement. Quantum kernels are used in a classification framework to inherit the convex optimization program and avoid common limitations of variational quantum classifiers. As QKA optimizes the Quantum Kernel Estimation, in turn it helps QNN sort programs to achieve higher generalization of accuracy and highly required in Automated Quality Management based on Image Processing.
-<br>The CircuitQNN is based on a (parametrized) QuantumCircuit. This can take input as well as weight parameters and produces samples from the measurement. The samples can either be interpreted as probabilities of measuring the integer index corresponding to a bitstring or directly as a batch of binary output. In the case of probabilities, gradients can be estimated efficiently and the CircuitQNN provides a backward pass as well. In case of samples, differentiation is not possible and the backward pass returns (None, None).
+					Collaboration has always been an important concept in the scientific community. In addition to using the built-in programs, a new dimension can come up with Qiskit ML programs that can help and accelerate the progress in research.
+					<br><br>
+					In Quantum Machine Learning (QML), Quantum kernels are the approach of exploiting group structure in data which helps to achieve quantum speedup. Quantum kernels can be optimized with a technique called kernel alignment. QNN is parameterized quantum circuits that act like linear methods in quantum feature space and are suitable for using quantum kernels and in turn can be optimized using Quantum Kernel Alignment. An attempt is made to demonstrate the application of using QKA with QNN networks in the model to have augmented training or performance improvement. Quantum kernels are used in a classification framework to inherit the convex optimization program and avoid common limitations of variational quantum classifiers. As QKA optimizes the Quantum Kernel Estimation, in turn, it helps QNN sort programs to achieve higher generalization of accuracy and is highly required in Automated Quality Management based on Image Processing.
+					<br><br>
+					<strong>Creating a "Quantum Hybrid Layer" with Qiskit QML:</strong>
+					<br><br>
+					The CircuitQNN is based on a (parametrized) QuantumCircuit. This can take input as well as weight parameters and product samples from the measurement. The samples can either be interpreted as probabilities of measuring the integer index corresponding to a bitstring or directly as a batch of binary output. In the case of probabilities, gradients can be estimated efficiently and the CircuitQNN provides a backward pass as well. In the case of samples, differentiation is not possible and the backward pass returns (None, None).
+					<img src="{{ url_for('static', filename='assets/images/QKA1.png') }}" alt="">
+					<strong>Results:</strong>
+					<br><br>
+					The training results for 5 epochs are as follows:
+					<img src="{{ url_for('static', filename='assets/images/QKA2.png') }}" alt="">
+					<br>
+					<img src="{{ url_for('static', filename='assets/images/QKA3.png') }}" alt="">
+					These are the results obtained
+					<img src="{{ url_for('static', filename='assets/images/QKA4.png') }}" alt="">
+					We can see that the model easily detects the zones that present no cracks as seen in the photo on the left. However, on the right, the model detected some part of the crack but not entirely. Thus it detected the imperfections on the images but could not precisely point them on the image.
                                 </p>
                             </div>
                         </div>
